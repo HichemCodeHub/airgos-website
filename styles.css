@@ -1,0 +1,230 @@
+/* Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    line-height: 1.6;
+    background-color: #f4f4f4;
+    color: #333;
+	font-family: 'Roboto', sans-serif;	
+}
+
+/* Header Styles */
+header {
+    background-color: #0073e6;
+    color: white;
+    padding: 20px 0;
+}
+
+header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header h1 {
+    margin: 0;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+}
+
+nav ul li a:hover {
+    text-decoration: underline;
+}
+
+/* Section Styles */
+section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.0); /* Augmenter l'opacité à 0.7 au lieu de 0.5 */
+    z-index: -1;
+	color:blach;
+}
+section .container {
+    background-color: rgba(0, 0, 0, 0.0); /* Fond semi-transparent derrière le texte */
+    padding: 20px;
+    border-radius: 10px; /* Optionnel : arrondir les coins pour un effet esthétique */
+}
+section.alt-section {
+    background-color: #e9ecef;
+}
+
+section h2 {
+    margin-bottom: 20px;
+    font-size: 30pt;
+    color: #0073e6;
+	font-family:roboto;
+}
+
+section p, section ul {
+    margin-bottom: 20px;
+	color:black;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Footer Styles */
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+}
+
+/* Menu Icon */
+.menu-icon {
+    display: none;
+    font-size: 30px;
+    cursor: pointer;
+}
+
+/* Media Queries for Responsive Design */
+
+/* For tablets and smaller devices */
+@media (max-width: 768px) {
+    header .container {
+        flex-direction: column;
+        text-align: center;
+    }
+
+   nav ul {
+        flex-direction: column;
+        display: none;
+        width: 100%;
+        background-color: #0073e6;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        text-align: center;
+        padding: 10px 0;
+    }
+
+    nav ul li {
+        margin-bottom: 10px;
+    }
+	.menu-icon {
+        display: block;
+    }
+	nav.visible ul {
+        display: block;
+    }
+    section {
+        padding: 30px 15px;
+    }
+
+    section h2 {
+        font-size: 22px;
+    }
+
+    .container {
+        padding: 0 15px;
+    }
+}
+@media (max-width: 480px) {
+    header .container {
+        padding: 10px;
+    }
+
+    header h1 {
+        font-size: 24px;
+    }
+
+    nav ul {
+        top: 50px;
+    }
+
+    section {
+        padding: 20px 10px;
+    }
+
+    section h2 {
+        font-size: 20px;
+    }
+
+    section p, section ul {
+        margin-bottom: 15px;
+    }
+
+    .container {
+        padding: 0 10px;
+    }
+
+    footer {
+        padding: 5px 0;
+    }
+}
+
+/* Specific section backgrounds */
+
+#Imgpresentation {
+    background-image: url('1.jpg');
+	background-size: cover;
+	background-position: center; 
+	background-repeat: no-repeat; 
+}
+/*
+#constat {
+    background-image: url('2.jpg');
+	background-size: cover;
+	background-position: center; 
+	background-repeat: no-repeat; 
+}
+*/
+/*
+#description {
+    background-image: url('16.jpg');
+	background-size: cover;
+	background-position: center; 
+	background-repeat: no-repeat; 
+}
+/*
+#application-mobile {
+    background-image: url('4.jpg');
+	background-size: cover;
+	background-position: center; 
+	background-repeat: no-repeat; 
+}
+*/
+/*#back-office {
+    background-image: url('5.jpg');
+	background-size: cover;
+	background-position: center; 
+	background-repeat: no-repeat; 
+}
+/*
+#clients {
+    background-image: url('6.jpg');
+	background-size: cover;
+	background-position: center; 
+	background-repeat: no-repeat; 
+}
+*/
+/*
+#modules {
+    background-image: url('7.jpg');
+	background-size: cover;
+	background-position: center; 
+	background-repeat: no-repeat; 
+}
+*/
