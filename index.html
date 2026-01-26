@@ -617,6 +617,10 @@
     .testimonial-avatar {
       width: 56px;
       height: 56px;
+      min-width: 56px;
+      min-height: 56px;
+      max-width: 56px;
+      max-height: 56px;
       background: var(--gradient-primary);
       border-radius: 50%;
       display: flex;
@@ -625,6 +629,7 @@
       color: var(--white);
       font-weight: 700;
       font-size: 18px;
+      flex-shrink: 0;
     }
 
     .testimonial-info h4 {
