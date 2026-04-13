@@ -4,2121 +4,735 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="AIRGOS - La solution digitale de référence pour les professionnels de l'aéroportuaire et de la mobilité. Gestion RH, exploitation des vols, facturation automatisée.">
-  <title>AIRGOS - Solution Digitale Aéroportuaire</title>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-
-  <style>
-    /* ===== Variables CSS & Réinitialisation ===== */
-    :root {
-      --primary: #0055ff;
-      --primary-dark: #0044cc;
-      --primary-light: #e8f0ff;
-      --secondary: #00d4aa;
-      --accent: #7c3aed;
-      --dark: #0a1628;
-      --dark-light: #1a2744;
-      --gray-900: #111827;
-      --gray-700: #374151;
-      --gray-600: #4b5563;
-      --gray-400: #9ca3af;
-      --gray-200: #e5e7eb;
-      --gray-100: #f3f4f6;
-      --white: #ffffff;
-      --gradient-primary: linear-gradient(135deg, #0055ff 0%, #00d4aa 100%);
-      --gradient-dark: linear-gradient(135deg, #0a1628 0%, #1a2744 100%);
-      --gradient-hero: linear-gradient(135deg, #0a1628 0%, #102a43 50%, #0a1628 100%);
-      --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
-      --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
-      --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
-      --shadow-xl: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
-      --shadow-glow: 0 0 40px rgba(0,85,255,0.3);
-      --radius-sm: 8px;
-      --radius-md: 12px;
-      --radius-lg: 16px;
-      --radius-xl: 24px;
-      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    *, *::before, *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html {
-      scroll-behavior: smooth;
-      scroll-padding-top: 80px;
-    }
-
-    body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      line-height: 1.6;
-      color: var(--gray-700);
-      background: var(--white);
-      overflow-x: hidden;
-    }
-
-    img {
-      max-width: 100%;
-      height: auto;
-      display: block;
-    }
-
-    a {
-      text-decoration: none;
-      color: inherit;
-    }
-
-    ul {
-      list-style: none;
-    }
-
-    .container {
-      width: min(90%, 1200px);
-      margin: 0 auto;
-    }
-
-    /* ===== Typographie ===== */
-    h1, h2, h3, h4 {
-      color: var(--dark);
-      font-weight: 700;
-      line-height: 1.2;
-    }
-
-    .section-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 16px;
-      background: var(--primary-light);
-      color: var(--primary);
-      font-size: 14px;
-      font-weight: 600;
-      border-radius: 100px;
-      margin-bottom: 16px;
-    }
-
-    .section-title {
-      font-size: clamp(32px, 5vw, 48px);
-      margin-bottom: 16px;
-    }
-
-    .section-subtitle {
-      font-size: clamp(16px, 2vw, 20px);
-      color: var(--gray-600);
-      max-width: 700px;
-    }
-
-    .section-header {
-      text-align: center;
-      margin-bottom: 60px;
-    }
-
-    .section-header .section-subtitle {
-      margin: 0 auto;
-    }
-
-    /* ===== Boutons ===== */
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      padding: 14px 28px;
-      font-size: 16px;
-      font-weight: 600;
-      border-radius: var(--radius-md);
-      border: none;
-      cursor: pointer;
-      transition: var(--transition);
-    }
-
-    .btn-primary {
-      background: var(--gradient-primary);
-      color: var(--white);
-      box-shadow: var(--shadow-lg), 0 4px 14px rgba(0,85,255,0.4);
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-xl), 0 6px 20px rgba(0,85,255,0.5);
-    }
-
-    .btn-secondary {
-      background: var(--white);
-      color: var(--dark);
-      border: 2px solid var(--gray-200);
-    }
-
-    .btn-secondary:hover {
-      border-color: var(--primary);
-      color: var(--primary);
-    }
-
-    .btn-outline {
-      background: transparent;
-      color: var(--white);
-      border: 2px solid rgba(255,255,255,0.3);
-    }
-
-    .btn-outline:hover {
-      background: var(--white);
-      color: var(--dark);
-    }
-
-    /* ===== En-tête ===== */
-    header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 1000;
-      padding: 16px 0;
-      transition: var(--transition);
-    }
-
-    header.scrolled {
-      background: rgba(10, 22, 40, 0.95);
-      backdrop-filter: blur(20px);
-      padding: 12px 0;
-      box-shadow: 0 4px 30px rgba(0,0,0,0.2);
-    }
-
-    .nav-container {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .logo {
-      font-size: 28px;
-      font-weight: 800;
-      color: var(--white);
-      letter-spacing: -0.5px;
-    }
-
-    .logo span {
-      background: var(--gradient-primary);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    nav {
-      display: flex;
-      align-items: center;
-      gap: 32px;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 32px;
-    }
-
-    .nav-links a {
-      color: rgba(255,255,255,0.8);
-      font-size: 15px;
-      font-weight: 500;
-      transition: var(--transition);
-      position: relative;
-    }
-
-    .nav-links a::after {
-      content: '';
-      position: absolute;
-      bottom: -4px;
-      left: 0;
-      width: 0;
-      height: 2px;
-      background: var(--gradient-primary);
-      transition: var(--transition);
-    }
-
-    .nav-links a:hover {
-      color: var(--white);
-    }
-
-    .nav-links a:hover::after {
-      width: 100%;
-    }
-
-    .nav-cta {
-      padding: 10px 20px;
-      font-size: 14px;
-    }
-
-    .mobile-toggle {
-      display: none;
-      flex-direction: column;
-      gap: 6px;
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 8px;
-    }
-
-    .mobile-toggle span {
-      width: 24px;
-      height: 2px;
-      background: var(--white);
-      border-radius: 2px;
-      transition: var(--transition);
-    }
-
-    /* ===== Section Hero ===== */
-    .hero {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      background: var(--gradient-hero);
-      position: relative;
-      overflow: hidden;
-      padding: 120px 0 80px;
-    }
-
-    .hero::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      right: -20%;
-      width: 80%;
-      height: 150%;
-      background: radial-gradient(ellipse, rgba(0,85,255,0.15) 0%, transparent 70%);
-      pointer-events: none;
-    }
-
-    .hero::after {
-      content: '';
-      position: absolute;
-      bottom: -30%;
-      left: -10%;
-      width: 50%;
-      height: 80%;
-      background: radial-gradient(ellipse, rgba(0,212,170,0.1) 0%, transparent 70%);
-      pointer-events: none;
-    }
-
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 60px;
-      align-items: center;
-    }
-
-    .hero-content {
-      position: relative;
-      z-index: 2;
-    }
-
-    .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 16px;
-      background: rgba(255,255,255,0.1);
-      border: 1px solid rgba(255,255,255,0.2);
-      border-radius: 100px;
-      color: var(--white);
-      font-size: 14px;
-      font-weight: 500;
-      margin-bottom: 24px;
-      backdrop-filter: blur(10px);
-    }
-
-    .hero-badge::before {
-      content: '';
-      width: 8px;
-      height: 8px;
-      background: var(--secondary);
-      border-radius: 50%;
-      animation: pulse 2s infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.5; transform: scale(1.2); }
-    }
-
-    .hero h1 {
-      font-size: clamp(40px, 6vw, 64px);
-      color: var(--white);
-      margin-bottom: 24px;
-      line-height: 1.1;
-    }
-
-    .hero h1 .highlight {
-      background: var(--gradient-primary);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .hero-description {
-      font-size: clamp(16px, 2vw, 20px);
-      color: rgba(255,255,255,0.7);
-      margin-bottom: 40px;
-      max-width: 520px;
-    }
-
-    .hero-buttons {
-      display: flex;
-      gap: 16px;
-      flex-wrap: wrap;
-    }
-
-    .hero-visual {
-      position: relative;
-      z-index: 2;
-    }
-
-    .hero-image-wrapper {
-      position: relative;
-      border-radius: var(--radius-xl);
-      overflow: hidden;
-      box-shadow: var(--shadow-glow);
-    }
-
-    .hero-image-wrapper::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(180deg, transparent 60%, rgba(10,22,40,0.8) 100%);
-      z-index: 1;
-      pointer-events: none;
-    }
-
-    .hero-image-wrapper img {
-      width: 100%;
-      height: auto;
-      display: block;
-    }
-
-    .hero-stats {
-      display: flex;
-      gap: 40px;
-      margin-top: 60px;
-      padding-top: 40px;
-      border-top: 1px solid rgba(255,255,255,0.1);
-    }
-
-    .hero-stat {
-      text-align: left;
-    }
-
-    .hero-stat-value {
-      font-size: 36px;
-      font-weight: 800;
-      color: var(--white);
-      line-height: 1;
-    }
-
-    .hero-stat-label {
-      font-size: 14px;
-      color: rgba(255,255,255,0.6);
-      margin-top: 4px;
-    }
-
-    /* ===== Section Fonctionnalités ===== */
-    .features {
-      padding: 120px 0;
-      background: var(--white);
-    }
-
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 32px;
-    }
-
-    .feature-card {
-      padding: 40px 32px;
-      background: var(--white);
-      border: 1px solid var(--gray-200);
-      border-radius: var(--radius-lg);
-      transition: var(--transition);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .feature-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 4px;
-      background: var(--gradient-primary);
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: var(--transition);
-    }
-
-    .feature-card:hover {
-      border-color: transparent;
-      box-shadow: var(--shadow-xl);
-      transform: translateY(-8px);
-    }
-
-    .feature-card:hover::before {
-      transform: scaleX(1);
-    }
-
-    .feature-icon {
-      width: 64px;
-      height: 64px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: var(--primary-light);
-      border-radius: var(--radius-md);
-      margin-bottom: 24px;
-    }
-
-    .feature-icon svg {
-      width: 32px;
-      height: 32px;
-      color: var(--primary);
-    }
-
-    .feature-card h3 {
-      font-size: 20px;
-      margin-bottom: 12px;
-    }
-
-    .feature-card p {
-      color: var(--gray-600);
-      font-size: 15px;
-    }
-
-    /* ===== Section Statistiques ===== */
-    .stats {
-      padding: 100px 0;
-      background: var(--gradient-dark);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .stats::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 150%;
-      height: 100%;
-      background: radial-gradient(ellipse at center top, rgba(0,85,255,0.15) 0%, transparent 60%);
-    }
-
-    .stats .section-header {
-      position: relative;
-      z-index: 1;
-    }
-
-    .stats .section-title {
-      color: var(--white);
-    }
-
-    .stats .section-subtitle {
-      color: rgba(255,255,255,0.7);
-    }
-
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 32px;
-      position: relative;
-      z-index: 1;
-    }
-
-    .stat-card {
-      text-align: center;
-      padding: 40px 24px;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: var(--radius-lg);
-      backdrop-filter: blur(10px);
-      transition: var(--transition);
-    }
-
-    .stat-card:hover {
-      background: rgba(255,255,255,0.1);
-      transform: translateY(-4px);
-    }
-
-    .stat-value {
-      font-size: clamp(36px, 5vw, 52px);
-      font-weight: 800;
-      background: var(--gradient-primary);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      line-height: 1;
-      margin-bottom: 8px;
-    }
-
-    .stat-label {
-      color: rgba(255,255,255,0.8);
-      font-size: 15px;
-      font-weight: 500;
-    }
-
-    /* ===== Témoignages ===== */
-    .testimonials {
-      padding: 120px 0;
-      background: var(--gray-100);
-    }
-
-    .testimonials-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 32px;
-    }
-
-    .testimonial-card {
-      padding: 40px;
-      background: var(--white);
-      border-radius: var(--radius-lg);
-      box-shadow: var(--shadow-md);
-      position: relative;
-      transition: var(--transition);
-    }
-
-    .testimonial-card:hover {
-      box-shadow: var(--shadow-xl);
-      transform: translateY(-4px);
-    }
-
-    .testimonial-quote {
-      font-size: 48px;
-      color: var(--primary);
-      opacity: 0.2;
-      position: absolute;
-      top: 20px;
-      right: 30px;
-      font-family: Georgia, serif;
-    }
-
-    .testimonial-content {
-      font-size: 17px;
-      color: var(--gray-700);
-      line-height: 1.8;
-      margin-bottom: 24px;
-    }
-
-    .testimonial-author {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-
-    .testimonial-avatar {
-      width: 56px;
-      height: 56px;
-      min-width: 56px;
-      min-height: 56px;
-      max-width: 56px;
-      max-height: 56px;
-      background: var(--gradient-primary);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--white);
-      font-weight: 700;
-      font-size: 18px;
-      flex-shrink: 0;
-    }
-
-    .testimonial-info h4 {
-      font-size: 16px;
-      margin-bottom: 2px;
-    }
-
-    .testimonial-info span {
-      font-size: 14px;
-      color: var(--gray-600);
-    }
-
-    /* ===== Section Clients ===== */
-    .clients {
-      padding: 80px 0;
-      background: var(--white);
-    }
-
-    .clients-wrapper {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 60px;
-      flex-wrap: wrap;
-    }
-
-    .client-logo {
-      height: 50px;
-      opacity: 0.6;
-      filter: grayscale(100%);
-      transition: var(--transition);
-    }
-
-    .client-logo:hover {
-      opacity: 1;
-      filter: grayscale(0%);
-    }
-
-    /* ===== Sections Modules ===== */
-    .module-section {
-      padding: 120px 0;
-    }
-
-    .module-section:nth-child(even) {
-      background: var(--gray-100);
-    }
-
-    .module-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 80px;
-      align-items: center;
-    }
-
-    .module-grid.reverse {
-      direction: rtl;
-    }
-
-    .module-grid.reverse > * {
-      direction: ltr;
-    }
-
-    .module-content {
-      max-width: 540px;
-    }
-
-    .module-number {
-      font-size: 80px;
-      font-weight: 800;
-      background: var(--gradient-primary);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      opacity: 0.2;
-      line-height: 1;
-      margin-bottom: -20px;
-    }
-
-    .module-content h2 {
-      font-size: clamp(28px, 4vw, 40px);
-      margin-bottom: 20px;
-    }
-
-    .module-content > p {
-      color: var(--gray-600);
-      font-size: 17px;
-      margin-bottom: 32px;
-    }
-
-    .module-features {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-
-    .module-feature {
-      display: flex;
-      align-items: flex-start;
-      gap: 16px;
-      padding: 20px;
-      background: var(--white);
-      border-radius: var(--radius-md);
-      border: 1px solid var(--gray-200);
-      transition: var(--transition);
-    }
-
-    .module-section:nth-child(even) .module-feature {
-      background: var(--white);
-    }
-
-    .module-feature:hover {
-      border-color: var(--primary);
-      box-shadow: var(--shadow-md);
-    }
-
-    .module-feature-icon {
-      width: 44px;
-      height: 44px;
-      min-width: 44px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: var(--primary-light);
-      border-radius: var(--radius-sm);
-    }
-
-    .module-feature-icon svg {
-      width: 22px;
-      height: 22px;
-      color: var(--primary);
-    }
-
-    .module-feature h4 {
-      font-size: 16px;
-      margin-bottom: 4px;
-    }
-
-    .module-feature p {
-      font-size: 14px;
-      color: var(--gray-600);
-    }
-
-    .module-visual {
-      position: relative;
-    }
-
-    .module-image {
-      border-radius: var(--radius-xl);
-      box-shadow: var(--shadow-xl);
-      overflow: hidden;
-    }
-
-    .module-image img {
-      width: 100%;
-      height: auto;
-    }
-
-    /* ===== Section Mobile ===== */
-    .mobile-section {
-      padding: 120px 0;
-      background: var(--gradient-dark);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .mobile-section::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      right: -20%;
-      width: 70%;
-      height: 150%;
-      background: radial-gradient(ellipse, rgba(0,212,170,0.1) 0%, transparent 60%);
-    }
-
-    .mobile-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 80px;
-      align-items: center;
-    }
-
-    .mobile-content {
-      position: relative;
-      z-index: 2;
-    }
-
-    .mobile-content .section-badge {
-      background: rgba(0,212,170,0.2);
-      color: var(--secondary);
-    }
-
-    .mobile-content h2 {
-      color: var(--white);
-      font-size: clamp(32px, 4vw, 48px);
-      margin-bottom: 20px;
-    }
-
-    .mobile-content > p {
-      color: rgba(255,255,255,0.7);
-      font-size: 18px;
-      margin-bottom: 40px;
-    }
-
-    .mobile-features {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-
-    .mobile-feature-tag {
-      padding: 12px 20px;
-      background: rgba(255,255,255,0.1);
-      border: 1px solid rgba(255,255,255,0.2);
-      border-radius: var(--radius-md);
-      color: var(--white);
-      font-size: 14px;
-      font-weight: 500;
-      transition: var(--transition);
-    }
-
-    .mobile-feature-tag:hover {
-      background: rgba(255,255,255,0.2);
-    }
-
-    .mobile-visual {
-      position: relative;
-      z-index: 2;
-      display: flex;
-      justify-content: center;
-    }
-
-    .mobile-mockup {
-      max-width: 350px;
-      filter: drop-shadow(0 40px 80px rgba(0,0,0,0.4));
-    }
-
-    /* ===== Section Contact ===== */
-    .contact {
-      padding: 120px 0;
-      background: var(--white);
-    }
-
-    .contact-grid {
-      display: grid;
-      grid-template-columns: 1fr 1.2fr;
-      gap: 80px;
-      align-items: start;
-    }
-
-    .contact-info h2 {
-      font-size: clamp(32px, 4vw, 44px);
-      margin-bottom: 20px;
-    }
-
-    .contact-info > p {
-      color: var(--gray-600);
-      font-size: 17px;
-      margin-bottom: 40px;
-    }
-
-    .contact-details {
-      display: flex;
-      flex-direction: column;
-      gap: 24px;
-    }
-
-    .contact-item {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-
-    .contact-item-icon {
-      width: 52px;
-      height: 52px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: var(--primary-light);
-      border-radius: var(--radius-md);
-    }
-
-    .contact-item-icon svg {
-      width: 24px;
-      height: 24px;
-      color: var(--primary);
-    }
-
-    .contact-item-content h4 {
-      font-size: 14px;
-      color: var(--gray-600);
-      font-weight: 500;
-      margin-bottom: 2px;
-    }
-
-    .contact-item-content p {
-      font-size: 16px;
-      color: var(--dark);
-      font-weight: 600;
-    }
-
-    .contact-form-wrapper {
-      padding: 48px;
-      background: var(--gray-100);
-      border-radius: var(--radius-xl);
-    }
-
-    .contact-form {
-      display: flex;
-      flex-direction: column;
-      gap: 24px;
-    }
-
-    .form-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 24px;
-    }
-
-    .form-group {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .form-group label {
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--dark);
-    }
-
-    .form-group input,
-    .form-group textarea {
-      padding: 16px 20px;
-      border: 2px solid var(--gray-200);
-      border-radius: var(--radius-md);
-      font-size: 16px;
-      font-family: inherit;
-      transition: var(--transition);
-      background: var(--white);
-    }
-
-    .form-group input:focus,
-    .form-group textarea:focus {
-      outline: none;
-      border-color: var(--primary);
-      box-shadow: 0 0 0 4px rgba(0,85,255,0.1);
-    }
-
-    .form-group textarea {
-      resize: vertical;
-      min-height: 140px;
-    }
-
-    .contact-form .btn {
-      width: 100%;
-      padding: 18px;
-      font-size: 17px;
-    }
-
-    /* ===== Pied de page ===== */
-    footer {
-      background: var(--dark);
-      padding: 80px 0 40px;
-    }
-
-    .footer-grid {
-      display: grid;
-      grid-template-columns: 2fr 1fr 1fr 1fr;
-      gap: 60px;
-      margin-bottom: 60px;
-    }
-
-    .footer-brand {
-      max-width: 320px;
-    }
-
-    .footer-logo {
-      font-size: 28px;
-      font-weight: 800;
-      color: var(--white);
-      margin-bottom: 20px;
-    }
-
-    .footer-logo span {
-      background: var(--gradient-primary);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .footer-brand p {
-      color: rgba(255,255,255,0.6);
-      font-size: 15px;
-      line-height: 1.7;
-    }
-
-    .footer-column h4 {
-      color: var(--white);
-      font-size: 16px;
-      margin-bottom: 24px;
-    }
-
-    .footer-links {
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
-
-    .footer-links a {
-      color: rgba(255,255,255,0.6);
-      font-size: 15px;
-      transition: var(--transition);
-    }
-
-    .footer-links a:hover {
-      color: var(--white);
-    }
-
-    .footer-bottom {
-      padding-top: 40px;
-      border-top: 1px solid rgba(255,255,255,0.1);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 20px;
-    }
-
-    .footer-bottom p {
-      color: rgba(255,255,255,0.5);
-      font-size: 14px;
-    }
-
-    .footer-social {
-      display: flex;
-      gap: 16px;
-    }
-
-    .footer-social a {
-      width: 44px;
-      height: 44px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(255,255,255,0.1);
-      border-radius: 50%;
-      color: var(--white);
-      transition: var(--transition);
-    }
-
-    .footer-social a:hover {
-      background: var(--primary);
-    }
-
-    /* ===== Animations ===== */
-    .fade-in {
-      opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 0.8s ease, transform 0.8s ease;
-    }
-
-    .fade-in.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .slide-left {
-      opacity: 0;
-      transform: translateX(-50px);
-      transition: opacity 0.8s ease, transform 0.8s ease;
-    }
-
-    .slide-left.visible {
-      opacity: 1;
-      transform: translateX(0);
-    }
-
-    .slide-right {
-      opacity: 0;
-      transform: translateX(50px);
-      transition: opacity 0.8s ease, transform 0.8s ease;
-    }
-
-    .slide-right.visible {
-      opacity: 1;
-      transform: translateX(0);
-    }
-
-    /* ===== Responsive ===== */
-    @media (max-width: 1024px) {
-      .hero-grid,
-      .module-grid,
-      .mobile-grid,
-      .contact-grid {
-        grid-template-columns: 1fr;
-        gap: 60px;
-      }
-
-      .module-grid.reverse {
-        direction: ltr;
-      }
-
-      .hero-visual {
-        order: -1;
-      }
-
-      .features-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .stats-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .footer-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    @media (max-width: 768px) {
-      .nav-links {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: var(--dark);
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap: 32px;
-        z-index: 999;
-      }
-
-      .nav-links.open {
-        display: flex;
-      }
-
-      .nav-links a {
-        font-size: 24px;
-      }
-
-      .mobile-toggle {
-        display: flex;
-        z-index: 1001;
-      }
-
-      .mobile-toggle.open span:nth-child(1) {
-        transform: rotate(45deg) translate(6px, 6px);
-      }
-
-      .mobile-toggle.open span:nth-child(2) {
-        opacity: 0;
-      }
-
-      .mobile-toggle.open span:nth-child(3) {
-        transform: rotate(-45deg) translate(6px, -6px);
-      }
-
-      .nav-cta {
-        display: none;
-      }
-
-      .hero-stats {
-        gap: 24px;
-      }
-
-      .hero-stat-value {
-        font-size: 28px;
-      }
-
-      .features-grid,
-      .testimonials-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .form-row {
-        grid-template-columns: 1fr;
-      }
-
-      .footer-grid {
-        grid-template-columns: 1fr;
-        gap: 40px;
-      }
-
-      .footer-bottom {
-        flex-direction: column;
-        text-align: center;
-      }
-
-      .contact-form-wrapper {
-        padding: 32px 24px;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .hero h1 {
-        font-size: 32px;
-      }
-
-      .hero-buttons {
-        flex-direction: column;
-      }
-
-      .hero-buttons .btn {
-        width: 100%;
-      }
-
-      .hero-stats {
-        flex-direction: column;
-        gap: 20px;
-      }
-
-      .stats-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .clients-wrapper {
-        gap: 30px;
-      }
-
-      .client-logo {
-        height: 35px;
-      }
-    }
-
-    /* ===== Préférence pour mouvement réduit ===== */
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-      }
-
-      html {
-        scroll-behavior: auto;
-      }
-    }
-  </style>
+  <title>AIRGOS — Solution Digitale Aéroportuaire</title>
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-  <!-- En-tête -->
-  <header id="header">
-    <div class="container nav-container">
-      <a href="#" class="logo">AIR<span>GOS</span></a>
+  <!-- ===== NAVIGATION ===== -->
+  <nav class="nav">
+    <div class="nav__inner">
+      <a href="#" class="nav__logo">
+        <span class="nav__logo-icon">
+          <img src="logo-airgos.png" alt="AIRGOS" style="height:36px;width:auto;display:block;">
+        </span>
+      </a>
 
-      <nav>
-        <ul class="nav-links" id="navLinks">
-          <li><a href="#features">Fonctionnalites</a></li>
-          <li><a href="#modules">Modules</a></li>
-          <li><a href="#mobile">Mobile</a></li>
-          <li><a href="#testimonials">Temoignages</a></li>
-          <li><a href="#contact">Contact</a></li>
-        </ul>
+      <div class="nav__links">
+        <a href="#features" class="nav__link">Fonctionnalités</a>
+        <a href="#modules" class="nav__link">Modules</a>
+        <a href="#mobile" class="nav__link">Mobile</a>
+        <a href="#testimonials" class="nav__link">Témoignages</a>
+        <a href="#contact" class="nav__link">Contact</a>
+      </div>
 
-        <a href="#contact" class="btn btn-primary nav-cta">Demander une demo</a>
+      <a href="#contact" class="btn btn--primary btn--sm nav__cta">Demander une démo</a>
 
-        <button class="mobile-toggle" id="mobileToggle" aria-label="Menu">
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
-      </nav>
+      <button class="nav__hamburger" aria-label="Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
     </div>
-  </header>
+  </nav>
 
-  <main>
-    <!-- Section Hero -->
-    <section class="hero">
-      <div class="container">
-        <div class="hero-grid">
-          <div class="hero-content">
-            <h1>La solution digitale pour <span class="highlight">l'aeroportuaire</span> et la mobilite</h1>
-            <p class="hero-description">
-              Plateforme modulaire et evolutive : gestion RH, planification, exploitation des vols, facturation automatique et suivi qualite en temps reel.
-            </p>
-            <div class="hero-buttons">
-              <a href="#contact" class="btn btn-primary">
-                Demander une demo
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M5 12h14M12 5l7 7-7 7"/>
-                </svg>
-              </a>
-              <a href="#modules" class="btn btn-outline">Decouvrir les modules</a>
-            </div>
+  <!-- Mobile Navigation -->
+  <div class="nav__mobile">
+    <a href="#features">Fonctionnalités</a>
+    <a href="#modules">Modules</a>
+    <a href="#mobile">Mobile</a>
+    <a href="#testimonials">Témoignages</a>
+    <a href="#contact">Contact</a>
+    <a href="#contact" class="btn btn--primary">Demander une démo</a>
+  </div>
 
-            <div class="hero-stats">
-              <div class="hero-stat">
-                <div class="hero-stat-value">99.9%</div>
-                <div class="hero-stat-label">Disponibilite garantie</div>
-              </div>
-              <div class="hero-stat">
-                <div class="hero-stat-value">1500+</div>
-                <div class="hero-stat-label">Utilisateurs actifs</div>
-              </div>
-              <div class="hero-stat">
-                <div class="hero-stat-value">6000+</div>
-                <div class="hero-stat-label">Vols traites/mois</div>
-              </div>
-            </div>
-          </div>
+  <!-- ===== HERO ===== -->
+  <section class="hero">
+    <div class="hero__bg"></div>
 
-          <div class="hero-visual">
-            <div class="hero-image-wrapper">
-              <img src="v11.png" alt="Interface AIRGOS - Tableau de bord">
-            </div>
-          </div>
+    <!-- Floating dashboard visual -->
+    <div class="hero__visual">
+      <div class="hero__dashboard">
+        <div class="hero__dashboard-header">
+          <div class="hero__dashboard-dot"></div>
+          <div class="hero__dashboard-dot"></div>
+          <div class="hero__dashboard-dot"></div>
+        </div>
+        <div class="hero__dashboard-row">
+          <div class="hero__dashboard-cell" style="flex:2"></div>
+          <div class="hero__dashboard-cell hero__dashboard-cell--accent"></div>
+          <div class="hero__dashboard-cell hero__dashboard-cell--short"></div>
+        </div>
+        <div class="hero__dashboard-block"></div>
+        <div class="hero__dashboard-row">
+          <div class="hero__dashboard-cell hero__dashboard-cell--teal"></div>
+          <div class="hero__dashboard-cell" style="flex:1.5"></div>
+          <div class="hero__dashboard-cell hero__dashboard-cell--accent" style="flex:0.8"></div>
+        </div>
+        <div class="hero__dashboard-row">
+          <div class="hero__dashboard-cell hero__dashboard-cell--short"></div>
+          <div class="hero__dashboard-cell" style="flex:2"></div>
+        </div>
+        <div class="hero__dashboard-block" style="height:60px"></div>
+        <div class="hero__dashboard-row">
+          <div class="hero__dashboard-cell hero__dashboard-cell--accent" style="flex:1.8"></div>
+          <div class="hero__dashboard-cell hero__dashboard-cell--teal" style="flex:0.7"></div>
         </div>
       </div>
-    </section>
+    </div>
 
-    <!-- Section Fonctionnalités -->
-    <section class="features" id="features">
-      <div class="container">
-        <div class="section-header fade-in">
-          <span class="section-badge">Pourquoi AIRGOS</span>
-          <h2 class="section-title">Une solution complete et fiable</h2>
-          <p class="section-subtitle">
-            AIRGOS repond aux besoins des compagnies aeriennes, handlers, fuelers et gestionnaires d'aeroports avec une plateforme robuste et intuitive.
-          </p>
-        </div>
-
-        <div class="features-grid">
-          <div class="feature-card fade-in">
-            <div class="feature-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-              </svg>
-            </div>
-            <h3>Infrastructure securisee</h3>
-            <p>Hebergement dedie avec sauvegardes automatiques, redondance et support 24/7 pour une disponibilite maximale.</p>
-          </div>
-
-          <div class="feature-card fade-in">
-            <div class="feature-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <rect x="5" y="2" width="14" height="20" rx="2" ry="2"/>
-                <line x1="12" y1="18" x2="12" y2="18"/>
-              </svg>
-            </div>
-            <h3>100% Responsive</h3>
-            <p>Interface optimisee pour tous les appareils : smartphone, tablette et PC pour une utilisation fluide sur le terrain.</p>
-          </div>
-
-          <div class="feature-card fade-in">
-            <div class="feature-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
-              </svg>
-            </div>
-            <h3>Temps reel</h3>
-            <p>Synchronisation instantanee des donnees de vol, mises a jour automatiques et alertes en temps reel.</p>
-          </div>
-
-          <div class="feature-card fade-in">
-            <div class="feature-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
-              </svg>
-            </div>
-            <h3>Modules metiers</h3>
-            <p>Nettoyage cabine, audits qualite, controle d'acces, gestion vehicules, objets trouves et bien plus.</p>
-          </div>
-
-          <div class="feature-card fade-in">
-            <div class="feature-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-                <circle cx="9" cy="7" r="4"/>
-                <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
-                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-              </svg>
-            </div>
-            <h3>Gestion RH complete</h3>
-            <p>Planification des equipes, pointage, vacations, conges et integration paie dans une seule plateforme.</p>
-          </div>
-
-          <div class="feature-card fade-in">
-            <div class="feature-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <line x1="12" y1="1" x2="12" y2="23"/>
-                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
-              </svg>
-            </div>
-            <h3>Facturation automatique</h3>
-            <p>Generation des factures, grilles tarifaires personnalisees et exports comptables en quelques clics.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Section Statistiques -->
-    <section class="stats">
-      <div class="container">
-        <div class="section-header fade-in">
-          <span class="section-badge" style="background: rgba(0,212,170,0.2); color: #00d4aa;">Chiffres cles</span>
-          <h2 class="section-title">Une plateforme eprouvee</h2>
-          <p class="section-subtitle">
-            Exploitee en production sur plusieurs sites, AIRGOS est supervisee 7j/7 avec une architecture dediee garantissant haute disponibilite.
-          </p>
-        </div>
-
-        <div class="stats-grid">
-          <div class="stat-card fade-in">
-            <div class="stat-value">99.9%</div>
-            <div class="stat-label">SLA disponibilite cible</div>
-          </div>
-          <div class="stat-card fade-in">
-            <div class="stat-value">500+</div>
-            <div class="stat-label">Comptes actifs</div>
-          </div>
-          <div class="stat-card fade-in">
-            <div class="stat-value">1500+</div>
-            <div class="stat-label">Utilisateurs enregistres</div>
-          </div>
-          <div class="stat-card fade-in">
-            <div class="stat-value">200/j</div>
-            <div class="stat-label">Vols traites en moyenne</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Section Clients -->
-    <section class="clients">
-      <div class="container">
-        <div class="section-header fade-in">
-          <span class="section-badge">Partenaires</span>
-          <h2 class="section-title">Ils nous font confiance</h2>
-        </div>
-
-        <div class="clients-wrapper fade-in">
-          <img src="AF.gif" alt="Air France" class="client-logo">
-          <img src="DL.png" alt="Delta Airlines" class="client-logo">
-          <img src="TOTAL.png" alt="Total" class="client-logo">
-          <img src="LADYBIRD.png" alt="Ladybird" class="client-logo">
-          <img src="CRS.png" alt="CRS" class="client-logo">
-          <img src="CHR.png" alt="CHR" class="client-logo">
-          <img src="HOTAC.png" alt="Hotac" class="client-logo">
-        </div>
-      </div>
-    </section>
-
-    <!-- Module 1 : RH & Planification -->
-    <section class="module-section" id="modules">
-      <div class="container">
-        <div class="module-grid">
-          <div class="module-content slide-left">
-            <div class="module-number">01</div>
-            <span class="section-badge">Module</span>
-            <h2>Ressources Humaines & Planification</h2>
-            <p>Gerez efficacement vos equipes avec des outils complets de planification, de suivi du temps de travail et d'administration du personnel.</p>
-
-            <div class="module-features">
-              <div class="module-feature">
-                <div class="module-feature-icon">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-                    <circle cx="12" cy="7" r="4"/>
-                  </svg>
-                </div>
-                <div>
-                  <h4>Dossiers du personnel</h4>
-                  <p>Fiches employes, contrats, formations, certifications et dotations centralisees.</p>
-                </div>
-              </div>
-
-              <div class="module-feature">
-                <div class="module-feature-icon">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
-                    <line x1="16" y1="2" x2="16" y2="6"/>
-                    <line x1="8" y1="2" x2="8" y2="6"/>
-                    <line x1="3" y1="10" x2="21" y2="10"/>
-                  </svg>
-                </div>
-                <div>
-                  <h4>Planification intelligente</h4>
-                  <p>Vacations automatisees, gestion des absences et affectation selon qualifications.</p>
-                </div>
-              </div>
-
-              <div class="module-feature">
-                <div class="module-feature-icon">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <circle cx="12" cy="12" r="10"/>
-                    <polyline points="12 6 12 12 16 14"/>
-                  </svg>
-                </div>
-                <div>
-                  <h4>Pointage & Prepaie</h4>
-                  <p>Badge aeroportuaire ou interne, reconciliation automatique et exports paie.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="module-visual slide-right">
-            <div class="module-image">
-              <img src="18BE.png" alt="Module RH et planification AIRGOS">
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Module 2 : Exploitation & Monitoring -->
-    <section class="module-section">
-      <div class="container">
-        <div class="module-grid reverse">
-          <div class="module-content slide-right">
-            <div class="module-number">02</div>
-            <span class="section-badge">Module</span>
-            <h2>Exploitation & Monitoring</h2>
-            <p>Suivez vos operations en temps reel avec une visibilite complete sur le programme de vols et les interventions terrain.</p>
-
-            <div class="module-features">
-              <div class="module-feature">
-                <div class="module-feature-icon">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M22 2L2 22"/>
-                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91"/>
-                    <path d="M17.5 2.5L22 7"/>
-                  </svg>
-                </div>
-                <div>
-                  <h4>Programme de vols</h4>
-                  <p>Import et gestion des vols reguliers, charters et deroutes avec mises a jour temps reel.</p>
-                </div>
-              </div>
-
-              <div class="module-feature">
-                <div class="module-feature-icon">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
-                    <circle cx="12" cy="10" r="3"/>
-                  </svg>
-                </div>
-                <div>
-                  <h4>Operations terrain</h4>
-                  <p>Suivi complet : arrivee, debarquement, nettoyage, refueling, embarquement.</p>
-                </div>
-              </div>
-
-              <div class="module-feature">
-                <div class="module-feature-icon">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                    <polyline points="14 2 14 8 20 8"/>
-                    <line x1="16" y1="13" x2="8" y2="13"/>
-                    <line x1="16" y1="17" x2="8" y2="17"/>
-                  </svg>
-                </div>
-                <div>
-                  <h4>Rapports & Archivage</h4>
-                  <p>Comptes rendus automatiques, signature electronique et historisation complete.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="module-visual slide-left">
-            <div class="module-image">
-              <img src="18BB.png" alt="Module exploitation AIRGOS">
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Module 3 : Facturation -->
-    <section class="module-section">
-      <div class="container">
-        <div class="module-grid">
-          <div class="module-content slide-left">
-            <div class="module-number">03</div>
-            <span class="section-badge">Module</span>
-            <h2>Facturation & Gestion financiere</h2>
-            <p>Automatisez votre facturation avec des grilles tarifaires personnalisees et des exports comptables integres.</p>
-
-            <div class="module-features">
-              <div class="module-feature">
-                <div class="module-feature-icon">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
-                    <line x1="1" y1="10" x2="23" y2="10"/>
-                  </svg>
-                </div>
-                <div>
-                  <h4>Tarifications flexibles</h4>
-                  <p>Grilles par type de prestation et accords compagnies avec calculs automatiques.</p>
-                </div>
-              </div>
-
-              <div class="module-feature">
-                <div class="module-feature-icon">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                    <polyline points="14 2 14 8 20 8"/>
-                    <line x1="12" y1="18" x2="12" y2="12"/>
-                    <line x1="9" y1="15" x2="15" y2="15"/>
-                  </svg>
-                </div>
-                <div>
-                  <h4>Facturation automatique</h4>
-                  <p>Generation, envoi, avoirs, ajustements et relances en quelques clics.</p>
-                </div>
-              </div>
-
-              <div class="module-feature">
-                <div class="module-feature-icon">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                    <polyline points="7 10 12 15 17 10"/>
-                    <line x1="12" y1="15" x2="12" y2="3"/>
-                  </svg>
-                </div>
-                <div>
-                  <h4>Exports comptables</h4>
-                  <p>Integration logiciels comptables, TVA et analytique pour un suivi financier complet.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="module-visual slide-right">
-            <div class="module-image">
-              <img src="18BC.png" alt="Module facturation AIRGOS">
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Module 4 : Complémentaires -->
-    <section class="module-section">
-      <div class="container">
-        <div class="module-grid reverse">
-          <div class="module-content slide-right">
-            <div class="module-number">04</div>
-            <span class="section-badge">Module</span>
-            <h2>Modules complementaires</h2>
-            <p>Des fonctionnalites metier specifiques pour couvrir l'ensemble de vos besoins operationnels.</p>
-
-            <div class="module-features">
-              <div class="module-feature">
-                <div class="module-feature-icon">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M9 11l3 3L22 4"/>
-                    <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
-                  </svg>
-                </div>
-                <div>
-                  <h4>Audits cabine & Qualite</h4>
-                  <p>Checklists numeriques, conformite et reporting automatise.</p>
-                </div>
-              </div>
-
-              <div class="module-feature">
-                <div class="module-feature-icon">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
-                    <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
-                  </svg>
-                </div>
-                <div>
-                  <h4>Controle d'acces</h4>
-                  <p>Badges, habilitations et rapports d'acces a bord securises.</p>
-                </div>
-              </div>
-
-              <div class="module-feature">
-                <div class="module-feature-icon">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <circle cx="12" cy="12" r="3"/>
-                    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
-                  </svg>
-                </div>
-                <div>
-                  <h4>Vehicules & Objets trouves</h4>
-                  <p>Gestion du parc vehicules, maintenance et suivi des objets trouves.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="module-visual slide-left">
-            <div class="module-image">
-              <img src="18BC1.png" alt="Modules complementaires AIRGOS">
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Section Mobile -->
-    <section class="mobile-section" id="mobile">
-      <div class="container">
-        <div class="mobile-grid">
-          <div class="mobile-content">
-            <span class="section-badge">Application mobile</span>
-            <h2>AIRGOS partout avec vous</h2>
-            <p>Tous les modules essentiels accessibles sur smartphone pour des operations 100% terrain : saisie rapide, controle qualite, preuves photo et suivi en temps reel.</p>
-
-            <div class="mobile-features">
-              <span class="mobile-feature-tag">Jalonnement</span>
-              <span class="mobile-feature-tag">Planning</span>
-              <span class="mobile-feature-tag">Controle d'acces</span>
-              <span class="mobile-feature-tag">Audit cabine</span>
-              <span class="mobile-feature-tag">Objets trouves</span>
-              <span class="mobile-feature-tag">Gestion des vols</span>
-              <span class="mobile-feature-tag">Pointage</span>
-              <span class="mobile-feature-tag">Photos & Rapports</span>
-            </div>
-          </div>
-
-          <div class="mobile-visual">
-            <img src="modules-smartphone-airgos.png" alt="Application mobile AIRGOS" class="mobile-mockup">
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Module 5 : Intégration -->
-    <section class="module-section">
-      <div class="container">
-        <div class="module-grid">
-          <div class="module-content slide-left">
-            <div class="module-number">05</div>
-            <span class="section-badge">Module</span>
-            <h2>Integration & Interoperabilite</h2>
-            <p>Connectez AIRGOS a vos systemes existants pour une synchronisation parfaite des donnees.</p>
-
-            <div class="module-features">
-              <div class="module-feature">
-                <div class="module-feature-icon">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <polyline points="16 18 22 12 16 6"/>
-                    <polyline points="8 6 2 12 8 18"/>
-                  </svg>
-                </div>
-                <div>
-                  <h4>API FlightStats</h4>
-                  <p>Rapatriement automatique des donnees de vol en temps reel.</p>
-                </div>
-              </div>
-
-              <div class="module-feature">
-                <div class="module-feature-icon">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
-                    <polyline points="15 3 21 3 21 9"/>
-                    <line x1="10" y1="14" x2="21" y2="3"/>
-                  </svg>
-                </div>
-                <div>
-                  <h4>Synchronisation plannings</h4>
-                  <p>Mise a jour automatique des equipes selon les changements de programme.</p>
-                </div>
-              </div>
-
-              <div class="module-feature">
-                <div class="module-feature-icon">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <ellipse cx="12" cy="5" rx="9" ry="3"/>
-                    <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/>
-                    <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
-                  </svg>
-                </div>
-                <div>
-                  <h4>Exports & Imports</h4>
-                  <p>Formats standards pour une integration fluide avec vos outils existants.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="module-visual slide-right">
-            <div class="module-image">
-              <img src="18BH.png" alt="Integration AIRGOS">
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Section Témoignages -->
-    <section class="testimonials" id="testimonials">
-      <div class="container">
-        <div class="section-header fade-in">
-          <span class="section-badge">Temoignages</span>
-          <h2 class="section-title">Ce que disent nos clients</h2>
-          <p class="section-subtitle">
-            Decouvrez les retours des professionnels qui utilisent AIRGOS au quotidien.
-          </p>
-        </div>
-
-        <div class="testimonials-grid">
-          <div class="testimonial-card fade-in">
-            <span class="testimonial-quote">"</span>
-            <p class="testimonial-content">
-              Logiciel intuitif, pratique et qualitatif. Ensemble des programmes diversifies repondant exactement a nos attentes. Facilite de traitement des donnees et reactivite remarquable de l'equipe AIRGOS.
-            </p>
-            <div class="testimonial-author">
-              <div class="testimonial-avatar">LB</div>
-              <div class="testimonial-info">
-                <h4>Ladybird - Air France Industrie</h4>
-                <span>Exploitation vols & reporting</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="testimonial-card fade-in">
-            <span class="testimonial-quote">"</span>
-            <p class="testimonial-content">
-              Air France et Delta signalent des retours tres positifs sur la fiabilite et le suivi temps reel. L'ergonomie et les donnees disponibles pour nos etudes sont excellentes.
-            </p>
-            <div class="testimonial-author">
-              <div class="testimonial-avatar">AF</div>
-              <div class="testimonial-info">
-                <h4>Compagnies aeriennes partenaires</h4>
-                <span>Via Ladybird</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="testimonial-card fade-in">
-            <span class="testimonial-quote">"</span>
-            <p class="testimonial-content">
-              La version mobile est plebiscitee pour sa simplicite et la rapidite de saisie sur piste. Nos equipes terrain l'ont adoptee immediatement.
-            </p>
-            <div class="testimonial-author">
-              <div class="testimonial-avatar">ET</div>
-              <div class="testimonial-info">
-                <h4>Equipes terrain</h4>
-                <span>Handlers, fuelers & cleaning</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="testimonial-card fade-in">
-            <span class="testimonial-quote">"</span>
-            <p class="testimonial-content">
-              Excellent fonctionnement global. Le logiciel est complet et couvre tous nos besoins operationnels. Un veritable gain de temps au quotidien.
-            </p>
-            <div class="testimonial-author">
-              <div class="testimonial-avatar">RG</div>
-              <div class="testimonial-info">
-                <h4>Resume global</h4>
-                <span>Retour utilisateurs</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Section Contact -->
-    <section class="contact" id="contact">
-      <div class="container">
-        <div class="contact-grid">
-          <div class="contact-info fade-in">
-            <span class="section-badge">Contact</span>
-            <h2>Parlons de votre projet</h2>
-            <p>Vous souhaitez en savoir plus sur AIRGOS ou planifier une demonstration ? Notre equipe est a votre disposition pour repondre a toutes vos questions.</p>
-
-            <div class="contact-details">
-              <div class="contact-item">
-                <div class="contact-item-icon">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
-                    <circle cx="12" cy="10" r="3"/>
-                  </svg>
-                </div>
-                <div class="contact-item-content">
-                  <h4>Adresse</h4>
-                  <p>33 avenue de Wagram, 75017 Paris</p>
-                </div>
-              </div>
-
-              <div class="contact-item">
-                <div class="contact-item-icon">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-                    <polyline points="22,6 12,13 2,6"/>
-                  </svg>
-                </div>
-                <div class="contact-item-content">
-                  <h4>Email</h4>
-                  <p>contact@airgos.aero</p>
-                </div>
-              </div>
-
-              <div class="contact-item">
-                <div class="contact-item-icon">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
-                  </svg>
-                </div>
-                <div class="contact-item-content">
-                  <h4>Support</h4>
-                  <p>Disponible 24/7</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="contact-form-wrapper fade-in">
-            <form class="contact-form" id="contactForm">
-              <div class="form-row">
-                <div class="form-group">
-                  <label for="name">Nom complet</label>
-                  <input type="text" id="name" name="name" placeholder="Votre nom" required>
-                </div>
-                <div class="form-group">
-                  <label for="company">Societe</label>
-                  <input type="text" id="company" name="company" placeholder="Votre societe">
-                </div>
-              </div>
-
-              <div class="form-group">
-                <label for="email">Email professionnel</label>
-                <input type="email" id="email" name="email" placeholder="votre@email.com" required>
-              </div>
-
-              <div class="form-group">
-                <label for="message">Votre message</label>
-                <textarea id="message" name="message" placeholder="Decrivez votre projet ou vos questions..." required></textarea>
-              </div>
-
-              <button type="submit" class="btn btn-primary">
-                Envoyer le message
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <line x1="22" y1="2" x2="11" y2="13"/>
-                  <polygon points="22 2 15 22 11 13 2 9 22 2"/>
-                </svg>
-              </button>
-            </form>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <!-- Pied de page -->
-  <footer>
     <div class="container">
-      <div class="footer-grid">
-        <div class="footer-brand">
-          <div class="footer-logo">AIR<span>GOS</span></div>
-          <p>La solution digitale de reference pour les professionnels de l'aeroportuaire et de la mobilite. Simplifiez vos operations avec une plateforme complete et intuitive.</p>
+      <div class="hero__content">
+        <div class="hero__badge">
+          <svg viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="3" fill="currentColor"/><circle cx="7" cy="7" r="6" stroke="currentColor" stroke-width="1.5" fill="none" opacity="0.4"/></svg>
+          Déjà utilisé par des acteurs majeurs de l'aviation
         </div>
 
-        <div class="footer-column">
-          <h4>Modules</h4>
-          <ul class="footer-links">
-            <li><a href="#modules">RH & Planification</a></li>
-            <li><a href="#modules">Exploitation</a></li>
-            <li><a href="#modules">Facturation</a></li>
-            <li><a href="#modules">Complementaires</a></li>
-          </ul>
+        <h1 class="hero__title">
+          La solution digitale pour<br>
+          <span>l'aéroportuaire</span> et la mobilité
+        </h1>
+
+        <p class="hero__subtitle">
+          Plateforme modulaire et évolutive : gestion RH, planification, exploitation des vols, facturation automatique et suivi qualité en temps réel.
+        </p>
+
+        <div class="hero__actions">
+          <a href="#contact" class="btn btn--primary btn--lg">
+            Demander une démonstration
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+          </a>
+          <a href="#modules" class="btn btn--ghost">
+            Découvrir les modules
+          </a>
         </div>
 
-        <div class="footer-column">
-          <h4>Produit</h4>
-          <ul class="footer-links">
-            <li><a href="#features">Fonctionnalites</a></li>
-            <li><a href="#mobile">Application mobile</a></li>
-            <li><a href="#testimonials">Temoignages</a></li>
-            <li><a href="#">Documentation</a></li>
-          </ul>
+        <div class="hero__proof">
+          <div class="hero__proof-item">
+            <span class="hero__proof-value">99,9%</span>
+            <span class="hero__proof-label">Disponibilité garantie</span>
+          </div>
+          <div class="hero__proof-divider"></div>
+          <div class="hero__proof-item">
+            <span class="hero__proof-value">1 500+</span>
+            <span class="hero__proof-label">Utilisateurs actifs</span>
+          </div>
+          <div class="hero__proof-divider"></div>
+          <div class="hero__proof-item">
+            <span class="hero__proof-value">6 000+</span>
+            <span class="hero__proof-label">Vols traités / mois</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== STATS BAR ===== -->
+  <div class="stats-bar">
+    <div class="container">
+      <div class="stats-bar__inner">
+        <div class="stat">
+          <div class="stat__value">99,9%</div>
+          <div class="stat__label">SLA disponibilité cible</div>
+        </div>
+        <div class="stat">
+          <div class="stat__value stat__value--blue">500+</div>
+          <div class="stat__label">Comptes actifs</div>
+        </div>
+        <div class="stat">
+          <div class="stat__value stat__value--teal">1 500+</div>
+          <div class="stat__label">Utilisateurs enregistrés</div>
+        </div>
+        <div class="stat">
+          <div class="stat__value">200/j</div>
+          <div class="stat__label">Vols traités en moyenne</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== FONCTIONNALITÉS ===== -->
+  <section class="section section--gradient" id="features">
+    <div class="container">
+      <div class="section__header reveal">
+        <div class="section__label">Pourquoi AIRGOS</div>
+        <h2 class="section__title">Une solution complète et fiable</h2>
+        <p class="section__subtitle">AIRGOS répond aux besoins des compagnies aériennes, handlers, fuelers et gestionnaires d'aéroports avec une plateforme robuste et intuitive.</p>
+      </div>
+
+      <div class="grid grid--3">
+        <div class="card reveal reveal-delay-1">
+          <div class="card__accent"></div>
+          <div class="card__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+          </div>
+          <h3 class="card__title">Infrastructure sécurisée</h3>
+          <p class="card__text">Hébergement dédié avec sauvegardes automatiques, redondance et support 24/7 pour une disponibilité maximale.</p>
         </div>
 
-        <div class="footer-column">
-          <h4>Contact</h4>
-          <ul class="footer-links">
-            <li><a href="#contact">Demander une demo</a></li>
-            <li><a href="mailto:contact@airgos.aero">contact@airgos.aero</a></li>
-            <li><a href="#">Support technique</a></li>
-          </ul>
+        <div class="card reveal reveal-delay-2">
+          <div class="card__accent card__accent--teal"></div>
+          <div class="card__icon card__icon--teal">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <rect x="5" y="2" width="14" height="20" rx="2"/>
+              <line x1="12" y1="18" x2="12" y2="18"/>
+            </svg>
+          </div>
+          <h3 class="card__title">100% Responsive</h3>
+          <p class="card__text">Interface optimisée pour tous les appareils : smartphone, tablette et PC pour une utilisation fluide sur le terrain.</p>
+        </div>
+
+        <div class="card reveal reveal-delay-3">
+          <div class="card__accent"></div>
+          <div class="card__icon card__icon--navy">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+            </svg>
+          </div>
+          <h3 class="card__title">Temps réel</h3>
+          <p class="card__text">Synchronisation instantanée des données de vol, mises à jour automatiques et alertes en temps réel.</p>
+        </div>
+
+        <div class="card reveal reveal-delay-1">
+          <div class="card__accent card__accent--teal"></div>
+          <div class="card__icon card__icon--teal">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+            </svg>
+          </div>
+          <h3 class="card__title">Modules métiers</h3>
+          <p class="card__text">Nettoyage cabine, audits qualité, contrôle d'accès, gestion véhicules, objets trouvés et bien plus.</p>
+        </div>
+
+        <div class="card reveal reveal-delay-2">
+          <div class="card__accent"></div>
+          <div class="card__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+              <circle cx="9" cy="7" r="4"/>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+            </svg>
+          </div>
+          <h3 class="card__title">Gestion RH complète</h3>
+          <p class="card__text">Planification des équipes, pointage, vacations, congés et intégration paie dans une seule plateforme.</p>
+        </div>
+
+        <div class="card reveal reveal-delay-3">
+          <div class="card__accent card__accent--teal"></div>
+          <div class="card__icon card__icon--navy">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <line x1="12" y1="1" x2="12" y2="23"/>
+              <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+            </svg>
+          </div>
+          <h3 class="card__title">Facturation automatique</h3>
+          <p class="card__text">Génération des factures, grilles tarifaires personnalisées et exports comptables en quelques clics.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PARTENAIRES ===== -->
+  <section class="section section--grey" id="partenaires">
+    <div class="container">
+      <div class="section__header reveal">
+        <div class="section__label">Ils nous font confiance</div>
+        <h2 class="section__title">Acteurs majeurs de l'aviation, clients AIRGOS</h2>
+      </div>
+
+      <div class="reveal" style="display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:clamp(1rem, 0.5rem + 2vw, 2.5rem);">
+        <div style="padding:16px 24px;background:var(--white);border:1.5px solid var(--grey-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);display:flex;align-items:center;justify-content:center;min-width:140px;height:72px;">
+          <img src="AF.gif" alt="Air France" style="max-height:40px;width:auto;">
+        </div>
+        <div style="padding:16px 24px;background:var(--white);border:1.5px solid var(--grey-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);display:flex;align-items:center;justify-content:center;min-width:140px;height:72px;">
+          <img src="DL.png" alt="Delta Air Lines" style="max-height:40px;width:auto;">
+        </div>
+        <div style="padding:16px 24px;background:var(--white);border:1.5px solid var(--grey-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);display:flex;align-items:center;justify-content:center;min-width:140px;height:72px;">
+          <img src="TOTAL.png" alt="TotalEnergies" style="max-height:40px;width:auto;">
+        </div>
+        <div style="padding:16px 24px;background:var(--white);border:1.5px solid var(--grey-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);display:flex;align-items:center;justify-content:center;min-width:140px;height:72px;">
+          <img src="LADYBIRD.png" alt="Ladybird" style="max-height:40px;width:auto;">
+        </div>
+        <div style="padding:16px 24px;background:var(--white);border:1.5px solid var(--grey-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);display:flex;align-items:center;justify-content:center;min-width:140px;height:72px;">
+          <img src="CRS.png" alt="CRS" style="max-height:40px;width:auto;">
+        </div>
+        <div style="padding:16px 24px;background:var(--white);border:1.5px solid var(--grey-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);display:flex;align-items:center;justify-content:center;min-width:140px;height:72px;">
+          <img src="CHR.png" alt="CHR" style="max-height:40px;width:auto;">
+        </div>
+        <div style="padding:16px 24px;background:var(--white);border:1.5px solid var(--grey-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);display:flex;align-items:center;justify-content:center;min-width:140px;height:72px;">
+          <img src="HOTAC.png" alt="HOTAC" style="max-height:40px;width:auto;">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== MODULES ===== -->
+  <section class="section" id="modules">
+    <div class="container">
+
+      <!-- Module 1 : RH & Planification -->
+      <div class="feature-row reveal" style="margin-bottom: clamp(4rem, 3rem + 4vw, 7rem);">
+        <div class="feature-row__content">
+          <div class="section__label" style="font-family:var(--font-mono);font-size:var(--text-xs);color:var(--grey-400);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:var(--space-md);">01</div>
+          <div class="section__label">Module</div>
+          <h2 class="section__title" style="text-align:left;">Ressources Humaines & Planification</h2>
+          <p style="color:var(--text-secondary);margin-bottom:var(--space-2xl);line-height:1.7;">
+            Gérez efficacement vos équipes avec des outils complets de planification, de suivi du temps de travail et d'administration du personnel.
+          </p>
+
+          <div style="display:flex;flex-direction:column;gap:var(--space-md);">
+            <div style="display:flex;align-items:flex-start;gap:var(--space-md);padding:var(--space-lg);background:var(--grey-100);border-radius:var(--radius-md);border:1px solid var(--grey-200);">
+              <div class="card__icon" style="margin-bottom:0;flex-shrink:0;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              </div>
+              <div>
+                <div style="font-family:var(--font-heading);font-weight:600;color:var(--navy);margin-bottom:4px;">Dossiers du personnel</div>
+                <div style="font-size:var(--text-sm);color:var(--text-secondary);">Fiches employés, contrats, formations, certifications et dotations centralisées.</div>
+              </div>
+            </div>
+            <div style="display:flex;align-items:flex-start;gap:var(--space-md);padding:var(--space-lg);background:var(--grey-100);border-radius:var(--radius-md);border:1px solid var(--grey-200);">
+              <div class="card__icon" style="margin-bottom:0;flex-shrink:0;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              </div>
+              <div>
+                <div style="font-family:var(--font-heading);font-weight:600;color:var(--navy);margin-bottom:4px;">Planification intelligente</div>
+                <div style="font-size:var(--text-sm);color:var(--text-secondary);">Vacations automatisées, gestion des absences et affectation selon qualifications.</div>
+              </div>
+            </div>
+            <div style="display:flex;align-items:flex-start;gap:var(--space-md);padding:var(--space-lg);background:var(--grey-100);border-radius:var(--radius-md);border:1px solid var(--grey-200);">
+              <div class="card__icon" style="margin-bottom:0;flex-shrink:0;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              </div>
+              <div>
+                <div style="font-family:var(--font-heading);font-weight:600;color:var(--navy);margin-bottom:4px;">Pointage & Prépaie</div>
+                <div style="font-size:var(--text-sm);color:var(--text-secondary);">Badge aéroportuaire ou interne, réconciliation automatique et exports paie.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="feature-row__visual">
+          <img src="18BE.png" alt="Module RH et planification AIRGOS" style="width:100%;height:100%;object-fit:cover;">
         </div>
       </div>
 
-      <div class="footer-bottom">
-        <p>&copy; 2025 AIRGOS. Tous droits reserves. | 33 avenue de Wagram, 75017 Paris</p>
+      <!-- Module 2 : Exploitation -->
+      <div class="feature-row feature-row--reverse reveal" style="margin-bottom: clamp(4rem, 3rem + 4vw, 7rem);">
+        <div class="feature-row__content">
+          <div class="section__label" style="font-family:var(--font-mono);font-size:var(--text-xs);color:var(--grey-400);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:var(--space-md);">02</div>
+          <div class="section__label">Module</div>
+          <h2 class="section__title" style="text-align:left;">Exploitation & Monitoring</h2>
+          <p style="color:var(--text-secondary);margin-bottom:var(--space-2xl);line-height:1.7;">
+            Suivez vos opérations en temps réel avec une visibilité complète sur le programme de vols et les interventions terrain.
+          </p>
 
-        <div class="footer-social">
-          <a href="#" aria-label="LinkedIn">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
-              <rect x="2" y="9" width="4" height="12"/>
-              <circle cx="4" cy="4" r="2"/>
-            </svg>
+          <div style="display:flex;flex-direction:column;gap:var(--space-md);">
+            <div style="display:flex;align-items:flex-start;gap:var(--space-md);padding:var(--space-lg);background:var(--grey-100);border-radius:var(--radius-md);border:1px solid var(--grey-200);">
+              <div class="card__icon" style="margin-bottom:0;flex-shrink:0;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17.5 2.5L22 7"/><path d="M22 2L2 22"/><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07"/></svg>
+              </div>
+              <div>
+                <div style="font-family:var(--font-heading);font-weight:600;color:var(--navy);margin-bottom:4px;">Programme de vols</div>
+                <div style="font-size:var(--text-sm);color:var(--text-secondary);">Import et gestion des vols réguliers, charters et déroutés avec mises à jour temps réel.</div>
+              </div>
+            </div>
+            <div style="display:flex;align-items:flex-start;gap:var(--space-md);padding:var(--space-lg);background:var(--grey-100);border-radius:var(--radius-md);border:1px solid var(--grey-200);">
+              <div class="card__icon" style="margin-bottom:0;flex-shrink:0;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              </div>
+              <div>
+                <div style="font-family:var(--font-heading);font-weight:600;color:var(--navy);margin-bottom:4px;">Opérations terrain</div>
+                <div style="font-size:var(--text-sm);color:var(--text-secondary);">Suivi complet : arrivée, débarquement, nettoyage, refueling, embarquement.</div>
+              </div>
+            </div>
+            <div style="display:flex;align-items:flex-start;gap:var(--space-md);padding:var(--space-lg);background:var(--grey-100);border-radius:var(--radius-md);border:1px solid var(--grey-200);">
+              <div class="card__icon" style="margin-bottom:0;flex-shrink:0;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+              </div>
+              <div>
+                <div style="font-family:var(--font-heading);font-weight:600;color:var(--navy);margin-bottom:4px;">Rapports & Archivage</div>
+                <div style="font-size:var(--text-sm);color:var(--text-secondary);">Comptes rendus automatiques, signature électronique et historisation complète.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="feature-row__visual">
+          <img src="18BB.png" alt="Module exploitation AIRGOS" style="width:100%;height:100%;object-fit:cover;">
+        </div>
+      </div>
+
+      <!-- Module 3 : Facturation -->
+      <div class="feature-row reveal" style="margin-bottom: clamp(4rem, 3rem + 4vw, 7rem);">
+        <div class="feature-row__content">
+          <div class="section__label" style="font-family:var(--font-mono);font-size:var(--text-xs);color:var(--grey-400);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:var(--space-md);">03</div>
+          <div class="section__label">Module</div>
+          <h2 class="section__title" style="text-align:left;">Facturation & Gestion financière</h2>
+          <p style="color:var(--text-secondary);margin-bottom:var(--space-2xl);line-height:1.7;">
+            Automatisez votre facturation avec des grilles tarifaires personnalisées et des exports comptables intégrés.
+          </p>
+
+          <div style="display:flex;flex-direction:column;gap:var(--space-md);">
+            <div style="display:flex;align-items:flex-start;gap:var(--space-md);padding:var(--space-lg);background:var(--grey-100);border-radius:var(--radius-md);border:1px solid var(--grey-200);">
+              <div class="card__icon" style="margin-bottom:0;flex-shrink:0;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+              </div>
+              <div>
+                <div style="font-family:var(--font-heading);font-weight:600;color:var(--navy);margin-bottom:4px;">Tarifications flexibles</div>
+                <div style="font-size:var(--text-sm);color:var(--text-secondary);">Grilles par type de prestation et accords compagnies avec calculs automatiques.</div>
+              </div>
+            </div>
+            <div style="display:flex;align-items:flex-start;gap:var(--space-md);padding:var(--space-lg);background:var(--grey-100);border-radius:var(--radius-md);border:1px solid var(--grey-200);">
+              <div class="card__icon" style="margin-bottom:0;flex-shrink:0;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+              </div>
+              <div>
+                <div style="font-family:var(--font-heading);font-weight:600;color:var(--navy);margin-bottom:4px;">Facturation automatique</div>
+                <div style="font-size:var(--text-sm);color:var(--text-secondary);">Génération, envoi, avoirs, ajustements et relances en quelques clics.</div>
+              </div>
+            </div>
+            <div style="display:flex;align-items:flex-start;gap:var(--space-md);padding:var(--space-lg);background:var(--grey-100);border-radius:var(--radius-md);border:1px solid var(--grey-200);">
+              <div class="card__icon" style="margin-bottom:0;flex-shrink:0;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              </div>
+              <div>
+                <div style="font-family:var(--font-heading);font-weight:600;color:var(--navy);margin-bottom:4px;">Exports comptables</div>
+                <div style="font-size:var(--text-sm);color:var(--text-secondary);">Intégration logiciels comptables, TVA et analytique pour un suivi financier complet.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="feature-row__visual">
+          <img src="18BC.png" alt="Module facturation AIRGOS" style="width:100%;height:100%;object-fit:cover;">
+        </div>
+      </div>
+
+      <!-- Module 4 : Complémentaires -->
+      <div class="feature-row feature-row--reverse reveal" style="margin-bottom: clamp(4rem, 3rem + 4vw, 7rem);">
+        <div class="feature-row__content">
+          <div class="section__label" style="font-family:var(--font-mono);font-size:var(--text-xs);color:var(--grey-400);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:var(--space-md);">04</div>
+          <div class="section__label">Module</div>
+          <h2 class="section__title" style="text-align:left;">Modules complémentaires</h2>
+          <p style="color:var(--text-secondary);margin-bottom:var(--space-2xl);line-height:1.7;">
+            Des fonctionnalités métier spécifiques pour couvrir l'ensemble de vos besoins opérationnels.
+          </p>
+
+          <div style="display:flex;flex-direction:column;gap:var(--space-md);">
+            <div style="display:flex;align-items:flex-start;gap:var(--space-md);padding:var(--space-lg);background:var(--grey-100);border-radius:var(--radius-md);border:1px solid var(--grey-200);">
+              <div class="card__icon" style="margin-bottom:0;flex-shrink:0;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+              </div>
+              <div>
+                <div style="font-family:var(--font-heading);font-weight:600;color:var(--navy);margin-bottom:4px;">Audits cabine & Qualité</div>
+                <div style="font-size:var(--text-sm);color:var(--text-secondary);">Checklists numériques, conformité et reporting automatisé.</div>
+              </div>
+            </div>
+            <div style="display:flex;align-items:flex-start;gap:var(--space-md);padding:var(--space-lg);background:var(--grey-100);border-radius:var(--radius-md);border:1px solid var(--grey-200);">
+              <div class="card__icon" style="margin-bottom:0;flex-shrink:0;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              </div>
+              <div>
+                <div style="font-family:var(--font-heading);font-weight:600;color:var(--navy);margin-bottom:4px;">Contrôle d'accès</div>
+                <div style="font-size:var(--text-sm);color:var(--text-secondary);">Badges, habilitations et rapports d'accès à bord sécurisés.</div>
+              </div>
+            </div>
+            <div style="display:flex;align-items:flex-start;gap:var(--space-md);padding:var(--space-lg);background:var(--grey-100);border-radius:var(--radius-md);border:1px solid var(--grey-200);">
+              <div class="card__icon" style="margin-bottom:0;flex-shrink:0;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+              </div>
+              <div>
+                <div style="font-family:var(--font-heading);font-weight:600;color:var(--navy);margin-bottom:4px;">Véhicules & Objets trouvés</div>
+                <div style="font-size:var(--text-sm);color:var(--text-secondary);">Gestion du parc véhicules, maintenance et suivi des objets trouvés.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="feature-row__visual">
+          <img src="18BC1.png" alt="Modules complémentaires AIRGOS" style="width:100%;height:100%;object-fit:cover;">
+        </div>
+      </div>
+
+      <!-- Module 5 : Intégration -->
+      <div class="feature-row reveal">
+        <div class="feature-row__content">
+          <div class="section__label" style="font-family:var(--font-mono);font-size:var(--text-xs);color:var(--grey-400);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:var(--space-md);">05</div>
+          <div class="section__label">Module</div>
+          <h2 class="section__title" style="text-align:left;">Intégration & Interopérabilité</h2>
+          <p style="color:var(--text-secondary);margin-bottom:var(--space-2xl);line-height:1.7;">
+            Connectez AIRGOS à vos systèmes existants pour une synchronisation parfaite des données.
+          </p>
+
+          <div style="display:flex;flex-direction:column;gap:var(--space-md);">
+            <div style="display:flex;align-items:flex-start;gap:var(--space-md);padding:var(--space-lg);background:var(--grey-100);border-radius:var(--radius-md);border:1px solid var(--grey-200);">
+              <div class="card__icon" style="margin-bottom:0;flex-shrink:0;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+              </div>
+              <div>
+                <div style="font-family:var(--font-heading);font-weight:600;color:var(--navy);margin-bottom:4px;">API FlightStats</div>
+                <div style="font-size:var(--text-sm);color:var(--text-secondary);">Rapatriement automatique des données de vol en temps réel.</div>
+              </div>
+            </div>
+            <div style="display:flex;align-items:flex-start;gap:var(--space-md);padding:var(--space-lg);background:var(--grey-100);border-radius:var(--radius-md);border:1px solid var(--grey-200);">
+              <div class="card__icon" style="margin-bottom:0;flex-shrink:0;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              </div>
+              <div>
+                <div style="font-family:var(--font-heading);font-weight:600;color:var(--navy);margin-bottom:4px;">Synchronisation plannings</div>
+                <div style="font-size:var(--text-sm);color:var(--text-secondary);">Mise à jour automatique des équipes selon les changements de programme.</div>
+              </div>
+            </div>
+            <div style="display:flex;align-items:flex-start;gap:var(--space-md);padding:var(--space-lg);background:var(--grey-100);border-radius:var(--radius-md);border:1px solid var(--grey-200);">
+              <div class="card__icon" style="margin-bottom:0;flex-shrink:0;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+              </div>
+              <div>
+                <div style="font-family:var(--font-heading);font-weight:600;color:var(--navy);margin-bottom:4px;">Exports & Imports</div>
+                <div style="font-size:var(--text-sm);color:var(--text-secondary);">Formats standards pour une intégration fluide avec vos outils existants.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="feature-row__visual">
+          <img src="18BH.png" alt="Intégration AIRGOS" style="width:100%;height:100%;object-fit:cover;">
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== APPLICATION MOBILE ===== -->
+  <section class="section section--dark" id="mobile">
+    <div class="container">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:clamp(3rem, 2rem + 4vw, 6rem);align-items:center;">
+        <div class="reveal">
+          <div class="section__label" style="color:var(--teal);">Application mobile</div>
+          <h2 style="font-family:var(--font-heading);font-size:var(--text-3xl);font-weight:700;color:var(--white);margin-bottom:var(--space-lg);line-height:1.2;">AIRGOS partout<br>avec vous sur le terrain</h2>
+          <p style="color:var(--text-on-dark-muted);font-size:var(--text-base);line-height:1.7;margin-bottom:var(--space-2xl);">Tous les modules essentiels accessibles sur smartphone pour des opérations 100% terrain : saisie rapide, contrôle qualité, preuves photo et suivi en temps réel.</p>
+          <div style="display:flex;flex-wrap:wrap;gap:var(--space-sm);">
+            <span style="padding:8px 16px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);border-radius:var(--radius-md);color:var(--text-on-dark);font-size:var(--text-sm);">Jalonnement</span>
+            <span style="padding:8px 16px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);border-radius:var(--radius-md);color:var(--text-on-dark);font-size:var(--text-sm);">Planning</span>
+            <span style="padding:8px 16px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);border-radius:var(--radius-md);color:var(--text-on-dark);font-size:var(--text-sm);">Contrôle d'accès</span>
+            <span style="padding:8px 16px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);border-radius:var(--radius-md);color:var(--text-on-dark);font-size:var(--text-sm);">Audit cabine</span>
+            <span style="padding:8px 16px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);border-radius:var(--radius-md);color:var(--text-on-dark);font-size:var(--text-sm);">Objets trouvés</span>
+            <span style="padding:8px 16px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);border-radius:var(--radius-md);color:var(--text-on-dark);font-size:var(--text-sm);">Gestion des vols</span>
+            <span style="padding:8px 16px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);border-radius:var(--radius-md);color:var(--text-on-dark);font-size:var(--text-sm);">Pointage</span>
+            <span style="padding:8px 16px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);border-radius:var(--radius-md);color:var(--text-on-dark);font-size:var(--text-sm);">Photos & Rapports</span>
+          </div>
+        </div>
+
+        <div class="reveal reveal-delay-2" style="display:flex;justify-content:center;">
+          <img src="modules-smartphone-airgos.png" alt="Application mobile AIRGOS" style="max-width:280px;filter:drop-shadow(0 40px 80px rgba(0,0,0,0.4));">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== TÉMOIGNAGES ===== -->
+  <section class="section section--grey" id="testimonials">
+    <div class="container">
+      <div class="section__header reveal">
+        <div class="section__label">Témoignages</div>
+        <h2 class="section__title">Ce que disent nos clients</h2>
+        <p class="section__subtitle">Découvrez les retours des professionnels qui utilisent AIRGOS au quotidien.</p>
+      </div>
+
+      <div class="grid grid--2 reveal">
+        <div style="padding:2rem 2rem 1.5rem;background:var(--white);border-radius:var(--radius-xl);box-shadow:var(--shadow-card);border:1px solid var(--grey-200);position:relative;">
+          <div style="position:absolute;top:1.5rem;right:2rem;font-size:3rem;line-height:1;color:var(--blue-action);opacity:0.12;font-family:Georgia,serif;">"</div>
+          <p style="color:var(--text-secondary);font-size:var(--text-base);line-height:1.8;margin-bottom:1.5rem;">Logiciel intuitif, pratique et qualitatif. Ensemble des programmes diversifiés répondant exactement à nos attentes. Facilité de traitement des données et réactivité remarquable de l'équipe AIRGOS.</p>
+          <div style="display:flex;align-items:center;gap:1rem;">
+            <div style="width:48px;height:48px;min-width:48px;border-radius:50%;background:linear-gradient(135deg,var(--blue-action),var(--teal));display:flex;align-items:center;justify-content:center;color:var(--white);font-family:var(--font-heading);font-weight:700;font-size:var(--text-base);">LB</div>
+            <div>
+              <div style="font-family:var(--font-heading);font-weight:600;color:var(--navy);font-size:var(--text-sm);">Ladybird — Air France Industrie</div>
+              <div style="font-size:var(--text-xs);color:var(--text-tertiary);">Exploitation vols & reporting</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="padding:2rem 2rem 1.5rem;background:var(--white);border-radius:var(--radius-xl);box-shadow:var(--shadow-card);border:1px solid var(--grey-200);position:relative;">
+          <div style="position:absolute;top:1.5rem;right:2rem;font-size:3rem;line-height:1;color:var(--blue-action);opacity:0.12;font-family:Georgia,serif;">"</div>
+          <p style="color:var(--text-secondary);font-size:var(--text-base);line-height:1.8;margin-bottom:1.5rem;">Air France et Delta signalent des retours très positifs sur la fiabilité et le suivi temps réel. L'ergonomie et les données disponibles pour nos études sont excellentes.</p>
+          <div style="display:flex;align-items:center;gap:1rem;">
+            <div style="width:48px;height:48px;min-width:48px;border-radius:50%;background:linear-gradient(135deg,var(--navy),var(--blue-action));display:flex;align-items:center;justify-content:center;color:var(--white);font-family:var(--font-heading);font-weight:700;font-size:var(--text-base);">AF</div>
+            <div>
+              <div style="font-family:var(--font-heading);font-weight:600;color:var(--navy);font-size:var(--text-sm);">Compagnies aériennes partenaires</div>
+              <div style="font-size:var(--text-xs);color:var(--text-tertiary);">Via Ladybird</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="padding:2rem 2rem 1.5rem;background:var(--white);border-radius:var(--radius-xl);box-shadow:var(--shadow-card);border:1px solid var(--grey-200);position:relative;">
+          <div style="position:absolute;top:1.5rem;right:2rem;font-size:3rem;line-height:1;color:var(--teal);opacity:0.15;font-family:Georgia,serif;">"</div>
+          <p style="color:var(--text-secondary);font-size:var(--text-base);line-height:1.8;margin-bottom:1.5rem;">La version mobile est plébiscitée pour sa simplicité et la rapidité de saisie sur piste. Nos équipes terrain l'ont adoptée immédiatement.</p>
+          <div style="display:flex;align-items:center;gap:1rem;">
+            <div style="width:48px;height:48px;min-width:48px;border-radius:50%;background:linear-gradient(135deg,var(--teal),var(--blue-action));display:flex;align-items:center;justify-content:center;color:var(--white);font-family:var(--font-heading);font-weight:700;font-size:var(--text-base);">ET</div>
+            <div>
+              <div style="font-family:var(--font-heading);font-weight:600;color:var(--navy);font-size:var(--text-sm);">Équipes terrain</div>
+              <div style="font-size:var(--text-xs);color:var(--text-tertiary);">Handlers, fuelers & cleaning</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="padding:2rem 2rem 1.5rem;background:var(--white);border-radius:var(--radius-xl);box-shadow:var(--shadow-card);border:1px solid var(--grey-200);position:relative;">
+          <div style="position:absolute;top:1.5rem;right:2rem;font-size:3rem;line-height:1;color:var(--blue-action);opacity:0.12;font-family:Georgia,serif;">"</div>
+          <p style="color:var(--text-secondary);font-size:var(--text-base);line-height:1.8;margin-bottom:1.5rem;">Excellent fonctionnement global. Le logiciel est complet et couvre tous nos besoins opérationnels. Un véritable gain de temps au quotidien.</p>
+          <div style="display:flex;align-items:center;gap:1rem;">
+            <div style="width:48px;height:48px;min-width:48px;border-radius:50%;background:linear-gradient(135deg,var(--navy),var(--teal));display:flex;align-items:center;justify-content:center;color:var(--white);font-family:var(--font-heading);font-weight:700;font-size:var(--text-base);">RG</div>
+            <div>
+              <div style="font-family:var(--font-heading);font-weight:600;color:var(--navy);font-size:var(--text-sm);">Résumé global</div>
+              <div style="font-size:var(--text-xs);color:var(--text-tertiary);">Retour utilisateurs</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CONTACT ===== -->
+  <section class="section" id="contact">
+    <div class="container">
+      <div style="display:grid;grid-template-columns:1fr 1.2fr;gap:clamp(3rem, 2rem + 4vw, 6rem);align-items:start;">
+
+        <div class="reveal">
+          <div class="section__label">Contact</div>
+          <h2 class="section__title" style="text-align:left;">Parlons de votre projet</h2>
+          <p style="color:var(--text-secondary);margin-bottom:var(--space-2xl);line-height:1.7;">Vous souhaitez en savoir plus sur AIRGOS ou planifier une démonstration ? Notre équipe est à votre disposition pour répondre à toutes vos questions.</p>
+
+          <div style="display:flex;flex-direction:column;gap:var(--space-xl);">
+            <div style="display:flex;align-items:center;gap:var(--space-lg);">
+              <div class="card__icon" style="margin-bottom:0;flex-shrink:0;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              </div>
+              <div>
+                <div style="font-family:var(--font-heading);font-size:var(--text-xs);font-weight:600;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:2px;">Adresse</div>
+                <div style="font-weight:600;color:var(--navy);">33 avenue de Wagram, 75017 Paris</div>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:var(--space-lg);">
+              <div class="card__icon" style="margin-bottom:0;flex-shrink:0;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              </div>
+              <div>
+                <div style="font-family:var(--font-heading);font-size:var(--text-xs);font-weight:600;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:2px;">Email</div>
+                <div style="font-weight:600;color:var(--navy);">contact@airgos.aero</div>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:var(--space-lg);">
+              <div class="card__icon" style="margin-bottom:0;flex-shrink:0;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              </div>
+              <div>
+                <div style="font-family:var(--font-heading);font-size:var(--text-xs);font-weight:600;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:2px;">Support</div>
+                <div style="font-weight:600;color:var(--navy);">Disponible 24/7</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="reveal reveal-delay-2" style="background:var(--off-white);border-radius:var(--radius-xl);padding:clamp(1.5rem, 1rem + 2vw, 3rem);border:1px solid var(--grey-200);">
+          <form id="contactForm" style="display:flex;flex-direction:column;gap:var(--space-lg);">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-lg);">
+              <div class="form-group">
+                <label class="form-label" for="name">Nom complet</label>
+                <input class="form-input" type="text" id="name" name="name" placeholder="Votre nom" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="company">Société</label>
+                <input class="form-input" type="text" id="company" name="company" placeholder="Votre société">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="email">Email professionnel</label>
+              <input class="form-input" type="email" id="email" name="email" placeholder="votre@email.com" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="message">Votre message</label>
+              <textarea class="form-textarea" id="message" name="message" placeholder="Décrivez votre projet ou vos questions..."></textarea>
+            </div>
+            <button type="submit" class="btn btn--primary btn--lg" style="width:100%;justify-content:center;">
+              Envoyer le message
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><line x1="14" y1="2" x2="6" y2="10"/><polygon points="14,2 9,14 6,10 2,7 14,2"/></svg>
+            </button>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CTA FINAL ===== -->
+  <section class="cta-section">
+    <div class="container">
+      <div class="cta-section__inner reveal">
+        <h2 class="cta-section__title">Prêt à transformer vos opérations ?</h2>
+        <p class="cta-section__text">Échangez avec un expert AIRGOS et découvrez comment notre plateforme peut répondre à vos enjeux.</p>
+        <div class="cta-section__actions">
+          <a href="#contact" class="btn btn--primary btn--lg">
+            Demander une démonstration
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
           </a>
-          <a href="#" aria-label="Twitter">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/>
-            </svg>
+          <a href="#contact" class="btn btn--ghost">
+            Parler à un expert AIRGOS
           </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div>
+          <a href="#" style="display:inline-flex;margin-bottom:var(--space-md);">
+            <img src="logo-airgos.png" alt="AIRGOS" style="height:50px;width:auto;filter:brightness(0) invert(1);">
+          </a>
+          <p class="footer__brand-text">La solution digitale de référence pour les professionnels de l'aéroportuaire et de la mobilité. Simplifiez vos opérations avec une plateforme complète et intuitive.</p>
+        </div>
+
+        <div>
+          <div class="footer__heading">Modules</div>
+          <a href="#modules" class="footer__link">RH & Planification</a>
+          <a href="#modules" class="footer__link">Exploitation</a>
+          <a href="#modules" class="footer__link">Facturation</a>
+          <a href="#modules" class="footer__link">Complémentaires</a>
+        </div>
+
+        <div>
+          <div class="footer__heading">Produit</div>
+          <a href="#features" class="footer__link">Fonctionnalités</a>
+          <a href="#mobile" class="footer__link">Application mobile</a>
+          <a href="#testimonials" class="footer__link">Témoignages</a>
+          <a href="#" class="footer__link">Documentation</a>
+        </div>
+
+        <div>
+          <div class="footer__heading">Contact</div>
+          <a href="#contact" class="footer__link">Demander une démo</a>
+          <a href="mailto:contact@airgos.aero" class="footer__link">contact@airgos.aero</a>
+          <span class="footer__link">Support technique</span>
+        </div>
+      </div>
+
+      <div class="footer__bottom">
+        <span>&copy; 2026 AIRGOS — Tous droits réservés | 33 avenue de Wagram, 75017 Paris</span>
+        <div class="footer__legal-links">
+          <a href="#">Mentions légales</a>
+          <a href="#">Politique de confidentialité</a>
+          <a href="#">CGU</a>
         </div>
       </div>
     </div>
   </footer>
 
+  <script src="js/main.js"></script>
   <script>
-    // Effet de défilement de l'en-tête
-    const header = document.getElementById('header');
-
-    const handleScroll = () => {
-      if (window.scrollY > 50) {
-        header.classList.add('scrolled');
-      } else {
-        header.classList.remove('scrolled');
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-
-    // Basculement du menu mobile
-    const mobileToggle = document.getElementById('mobileToggle');
-    const navLinks = document.getElementById('navLinks');
-
-    mobileToggle.addEventListener('click', () => {
-      mobileToggle.classList.toggle('open');
-      navLinks.classList.toggle('open');
-      document.body.style.overflow = navLinks.classList.contains('open') ? 'hidden' : '';
-    });
-
-    // Fermer le menu mobile au clic sur un lien
-    navLinks.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', () => {
-        mobileToggle.classList.remove('open');
-        navLinks.classList.remove('open');
-        document.body.style.overflow = '';
-      });
-    });
-
-    // Animations de défilement
-    const observerOptions = {
-      threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px'
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
-      });
-    }, observerOptions);
-
-    document.querySelectorAll('.fade-in, .slide-left, .slide-right').forEach(el => {
-      observer.observe(el);
-    });
-
     // Soumission du formulaire
-    const contactForm = document.getElementById('contactForm');
-
-    contactForm.addEventListener('submit', (e) => {
+    document.getElementById('contactForm').addEventListener('submit', (e) => {
       e.preventDefault();
-
-      // Récupérer les données du formulaire
-      const formData = new FormData(contactForm);
-      const data = Object.fromEntries(formData);
-
-      // Ici, vous enverriez normalement les données à un serveur
-      console.log('Form submitted:', data);
-
-      // Afficher le message de succès
-      alert('Merci pour votre message ! Nous vous recontacterons dans les plus brefs delais.');
-      contactForm.reset();
-    });
-
-    // Défilement fluide pour les liens d'ancrage
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function(e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-          target.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start'
-          });
-        }
-      });
+      alert('Merci pour votre message ! Nous vous recontacterons dans les plus brefs délais.');
+      e.target.reset();
     });
   </script>
 
