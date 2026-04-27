@@ -577,7 +577,7 @@
   <!-- ===== APPLICATION MOBILE ===== -->
   <section class="section section--dark" id="mobile">
     <div class="container">
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:clamp(3rem, 2rem + 4vw, 6rem);align-items:center;">
+      <div class="split-grid split-grid--equal">
         <div class="reveal">
           <div class="section__label" style="color:var(--teal);">Application mobile</div>
           <h2 style="font-family:var(--font-heading);font-size:var(--text-3xl);font-weight:700;color:var(--white);margin-bottom:var(--space-lg);line-height:1.2;">AIRGOS partout<br>avec vous sur le terrain</h2>
@@ -699,7 +699,7 @@
   <!-- ===== CONTACT ===== -->
   <section class="section" id="contact">
     <div class="container">
-      <div style="display:grid;grid-template-columns:1fr 1.2fr;gap:clamp(3rem, 2rem + 4vw, 6rem);align-items:start;">
+      <div class="split-grid split-grid--contact">
 
         <div class="reveal">
           <div class="section__label">Contact</div>
@@ -737,31 +737,16 @@
           </div>
         </div>
 
-        <div class="reveal reveal-delay-2" style="background:var(--off-white);border-radius:var(--radius-xl);padding:clamp(1.5rem, 1rem + 2vw, 3rem);border:1px solid var(--grey-200);">
-          <form id="contactForm" style="display:flex;flex-direction:column;gap:var(--space-lg);">
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-lg);">
-              <div class="form-group">
-                <label class="form-label" for="name">Nom complet</label>
-                <input class="form-input" type="text" id="name" name="name" placeholder="Votre nom" required>
-              </div>
-              <div class="form-group">
-                <label class="form-label" for="company">Société</label>
-                <input class="form-input" type="text" id="company" name="company" placeholder="Votre société">
-              </div>
-            </div>
-            <div class="form-group">
-              <label class="form-label" for="email">Email professionnel</label>
-              <input class="form-input" type="email" id="email" name="email" placeholder="votre@email.com" required>
-            </div>
-            <div class="form-group">
-              <label class="form-label" for="message">Votre message</label>
-              <textarea class="form-textarea" id="message" name="message" placeholder="Décrivez votre projet ou vos questions..."></textarea>
-            </div>
-            <button type="submit" class="btn btn--primary btn--lg" style="width:100%;justify-content:center;">
-              Envoyer le message
-              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><line x1="14" y1="2" x2="6" y2="10"/><polygon points="14,2 9,14 6,10 2,7 14,2"/></svg>
-            </button>
-          </form>
+        <div class="reveal reveal-delay-2" style="background:var(--off-white);border-radius:var(--radius-xl);padding:clamp(2rem, 1.5rem + 2vw, 3.5rem);border:1px solid var(--grey-200);display:flex;flex-direction:column;justify-content:center;gap:var(--space-lg);">
+          <div class="card__icon" style="margin-bottom:0;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </div>
+          <h3 style="font-family:var(--font-heading);font-size:clamp(1.5rem, 1.2rem + 0.8vw, 2rem);color:var(--navy);line-height:1.2;margin:0;">Écrivez-nous directement</h3>
+          <p style="color:var(--text-secondary);line-height:1.7;margin:0;">Envoyez-nous votre demande à <strong style="color:var(--navy);">contact@airgos.aero</strong>. Notre équipe vous répond sous 24h ouvrées.</p>
+          <a href="mailto:contact@airgos.aero?subject=Demande%20d'information%20AIRGOS" class="btn btn--primary btn--lg" style="width:100%;justify-content:center;margin-top:var(--space-sm);">
+            Envoyer un email
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><line x1="14" y1="2" x2="6" y2="10"/><polygon points="14,2 9,14 6,10 2,7 14,2"/></svg>
+          </a>
         </div>
 
       </div>
@@ -834,14 +819,6 @@
   </footer>
 
   <script src="js/main.js"></script>
-  <script>
-    // Soumission du formulaire
-    document.getElementById('contactForm').addEventListener('submit', (e) => {
-      e.preventDefault();
-      alert('Merci pour votre message ! Nous vous recontacterons dans les plus brefs délais.');
-      e.target.reset();
-    });
-  </script>
 
 </body>
 </html>
